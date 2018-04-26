@@ -19,16 +19,34 @@
 </head>
 <body>
   <div class="container">
-    <h1>Cropper with a range of aspect ratio</h1>
     <div>
       <!-- <img id="image" src="https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=2336343633,1745901737&fm=85&s=0E724F800C5256D4CA880492030050D2" alt="Picture"> -->
-      <img id="image" src="timg.jpg" alt="Picture">
+      <!-- <img id="image" src="timg.jpg" alt="Picture"> -->
+      <img id="image" src="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg" crossorigin>
     </div>
+    <label title="选择图片" for="chooseImg" class="">
+      <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" class="hidden" onchange="selectImg(this)"> 选择图片
+    </label>
+    <button onclick="crop()">裁剪裁剪</button>
+    <div id="result"></div>
+    <a id="download" download="test.jpeg" href="">下载图片</a>
   </div>
 </body>
-<script src="js/plugins/require.js" data-main="main"></script>
+<!-- <script src="js/plugins/canvas-to-blob.min.js"></script> -->
+<script src="js/plugins/require.js" data-main="js/main"></script>
 
 <script>
-  
+  // var can = document.createElement('canvas');
+  //   alert(JSON.stringify(can.toBlob))
+  //   if (can.toBlob) {
+  //     can.toBlob(
+  //       function (blob) {
+  //         var formData = new FormData();
+  //         formData.append('file', blob);
+  //         alert(formData.get('file'));
+  //       },
+  //       'image/jpeg'
+  //     );
+  //   }
 </script>
 </html>
