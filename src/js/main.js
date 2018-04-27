@@ -37,7 +37,8 @@ require(['cropper', 'toBlob'], function (Cropper) {
           width: newCropBoxWidth
         });
       }
-      cropper.setAspectRatio(1 / 1)
+      
+      cropper.setAspectRatio('') // 16/9 4/3 2/3 1/1
       cropper.setDragMode('move')
     },
     cropmove: function () {

@@ -7,28 +7,38 @@
   <title>web图片工具</title>
   <link rel="stylesheet" type="text/css" href="css/cropper.css" />
   <style>
-    .container {
-      max-width: 640px;
-      margin: 20px auto;
+    .out {
+      display: table;
+      width: 100%;
+      height: 500px;
+      text-align: center;
+      background:black;
     }
-  
+    .container {
+      width: 100%;
+      display:table-cell;
+      vertical-align:middle;
+      text-align:center;
+    }
     img {
       max-width: 100%;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div>
-      <!-- <img id="image" src="https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=2336343633,1745901737&fm=85&s=0E724F800C5256D4CA880492030050D2" alt="Picture"> -->
-      <img id="image" src="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg" crossorigin>
+  <div class="out">
+    <div class="container">
+      <div>
+        <!-- <img id="image" src="https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=2336343633,1745901737&fm=85&s=0E724F800C5256D4CA880492030050D2" alt="Picture"> -->
+        <img id="image" src="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg" crossorigin>
+      </div>
+      <label title="选择图片" for="chooseImg" class="">
+        <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" class="hidden" onchange="selectImg(this)"> 选择图片
+      </label>
+      <button onclick="crop()">裁剪裁剪</button>
+      <div id="result"></div>
+      <a id="download" download="test.jpeg" href="">下载图片</a>
     </div>
-    <label title="选择图片" for="chooseImg" class="">
-      <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" class="hidden" onchange="selectImg(this)"> 选择图片
-    </label>
-    <button onclick="crop()">裁剪裁剪</button>
-    <div id="result"></div>
-    <a id="download" download="test.jpeg" href="">下载图片</a>
   </div>
 </body>
 
