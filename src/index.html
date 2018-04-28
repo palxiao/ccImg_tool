@@ -5,14 +5,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>web图片工具</title>
+  <link rel="stylesheet" type="text/css" href="css/reset.css" />
   <link rel="stylesheet" type="text/css" href="css/cropper.css" />
   <style>
     .out {
+      color: beige;
       display: table;
       width: 100%;
-      height: 500px;
       text-align: center;
       background:black;
+      display: none;
     }
     .container {
       width: 100%;
@@ -20,30 +22,72 @@
       vertical-align:middle;
       text-align:center;
     }
-    img {
+    #image {
       max-width: 100%;
+    }
+    .main{
+      width: 100%;
+      display: -webkit-flex;
+      display: flex;
+      -webkit-align-items: center;
+      align-items: center;
+      -webkit-justify-content: center;
+      justify-content: center;
+    }
+    .inner {
+      overflow: hidden;
+      position: relative;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      border: 1px solid #c5c5c5;
+    }
+    .inner > img {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    #download {
+      position: absolute;
+      bottom: 20%;
+    }
+    .confirm {
+      color: aliceblue;
+      position: fixed;
+      border: 1px solid white;
+      border-radius: 5px;
+      bottom: 3%;
+      left: 5%;
+      padding: 6px;
     }
   </style>
 </head>
 <body>
-  <div class="out">
+  <div id="out" class="out">
     <div class="container">
       <div>
-        <!-- <img id="image" src="https://ss0.baidu.com/73F1bjeh1BF3odCf/it/u=2336343633,1745901737&fm=85&s=0E724F800C5256D4CA880492030050D2" alt="Picture"> -->
-        <img id="image" src="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg" crossorigin>
+        <img id="image" src="" crossorigin>
       </div>
-      <label title="选择图片" for="chooseImg" class="">
-        <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" class="hidden" onchange="selectImg(this)"> 选择图片
-      </label>
-      <button onclick="crop()">裁剪裁剪</button>
-      <div id="result"></div>
-      <a id="download" download="test.jpeg" href="">下载图片</a>
+      <div class="confirm" onclick="crop()">确认</div>
     </div>
   </div>
+  <div id="main" class="main">
+    <label class="inner" title="选择图片" for="chooseImg">
+      <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" style="display: none" onchange="selectImg(this)">
+      <img id="outImg" src="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg" crossorigin>
+    </label>
+    <a id="download" download="test.jpeg" href="">下载图片</a>
+  </div>
+  
+  
 </body>
 
 <script src="js/plugins/require.js" data-main="js/main"></script>
 
 <script>
+ wHeight = document.documentElement.clientHeight;
+ document.getElementById("out").style.height= wHeight +"px";
+ document.getElementById("main").style.height= wHeight +"px";
 </script>
 </html>
