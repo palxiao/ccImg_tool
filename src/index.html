@@ -8,23 +8,6 @@
   <link rel="stylesheet" type="text/css" href="css/reset.css" />
   <link rel="stylesheet" type="text/css" href="css/cropper.css" />
   <style>
-    .out {
-      color: beige;
-      display: table;
-      width: 100%;
-      text-align: center;
-      background:black;
-      display: none;
-    }
-    .container {
-      width: 100%;
-      display:table-cell;
-      vertical-align:middle;
-      text-align:center;
-    }
-    #image {
-      max-width: 100%;
-    }
     .main{
       width: 100%;
       display: -webkit-flex;
@@ -51,15 +34,39 @@
     #download {
       position: absolute;
       bottom: 20%;
+      z-index: -1;
     }
-    .confirm {
+
+    .out {
+      color: beige;
+      display: table;
+      width: 100%;
+      text-align: center;
+      background:black;
+      display: none;
+    }
+    .container {
+      width: 100%;
+      display:table-cell;
+      vertical-align:middle;
+      text-align:center;
+    }
+    #image {
+      max-width: 100%;
+    }
+    .confirm, .cancel {
       color: aliceblue;
       position: fixed;
       border: 1px solid white;
       border-radius: 5px;
       bottom: 3%;
+      padding: 6px 10px;
+    }
+    .confirm {
       left: 5%;
-      padding: 6px;
+    }
+    .cancel {
+      right: 5%;
     }
   </style>
 </head>
@@ -67,11 +74,13 @@
   <div id="out" class="out">
     <div class="container">
       <div>
-        <img id="image" src="" crossorigin>
+        <img id="ccw_cropper_image" src="" crossorigin>
       </div>
-      <div class="confirm" onclick="crop()">确认</div>
+      <div class="confirm" onclick="crop()">确 认</div>
+      <div class="cancel" onclick="model('hide')">取 消</div>
     </div>
   </div>
+
   <div id="main" class="main">
     <label class="inner" title="选择图片" for="chooseImg">
       <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" style="display: none" onchange="selectImg(this)">
@@ -80,14 +89,43 @@
     <a id="download" download="test.jpeg" href="">下载图片</a>
   </div>
   
-  
 </body>
 
-<script src="js/plugins/require.js" data-main="js/main"></script>
+<script src="js/lib/require.js" data-main="js/main"></script>
+<!-- <script src="js/lib/require.js"></script>
+<script src="js/config.js"></script> -->
 
 <script>
  wHeight = document.documentElement.clientHeight;
  document.getElementById("out").style.height= wHeight +"px";
  document.getElementById("main").style.height= wHeight +"px";
+
+var download = document.getElementById('download');
+var outImg = document.getElementById('outImg')
+var input = document.getElementById('chooseImg');
+
+ function selectImg(file) {
+  if (!file.files || !file.files[0]) {
+    return;
+  }
+  
+  var reader = new FileReader();
+  reader.onload = function (evt) {
+    var replaceSrc = evt.target.result;
+    // c.replace(replaceSrc);
+    input.value = '';
+    image.src = replaceSrc
+    c = new Cropper(image, {
+      aspectRatio: '',
+      ready: function () {
+        // c.setAspectRatio('') // 16/9 4/3 2/3 1/1
+        this.cropper.setDragMode('move')
+      }
+    });
+  }
+  reader.readAsDataURL(file.files[0]);
+
+  model('show')
+}
 </script>
 </html>

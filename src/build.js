@@ -11,8 +11,8 @@
     optimizeCss: 'standard',
     removeCombined: true,
     paths: {
-        "cropper": "plugins/cropper.min",
-        "toBlob": "plugins/canvas-to-blob.min"
+        "cropper": "lib/cropper.min",
+        "toBlob": "lib/canvas-to-blob.min"
     },
     shim: {
         'toBlob': {
