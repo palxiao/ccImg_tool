@@ -16,8 +16,6 @@ require.config({
 });
 
 
-require(['compress', '$cropper'], function ($compress) {
-  $compress(123, function (res) {
-    
-  })
+require(['compress', '$cropper'], function (compress) {
+  $compress = compress
 })

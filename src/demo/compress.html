@@ -9,10 +9,11 @@
 </head>
 <style>
     img {
+        margin-top: 5%;
         max-width: 100%;
     }
     .link {
-      margin-top: 10%;
+      margin-top: 5%;
       width: 90%;
       margin-left: 5%;
       height: 30px;
@@ -30,10 +31,44 @@
 <body>
     <img src="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg">
 
-    <a class="link" href="">点击压缩</a>
+    <div style="margin: 5% 0px">设置压缩等级：<input style="text-align: center" type="number" id="input" value="40">（1~99）等级越小图片质量越小</div>
+    设置宽高：<input id="kuan" style="margin-left:10px;width: 30%" type="number" value="100">
+    <input id="gao" style="margin-left:10px;width: 30%" type="number" value="100">
+
+    <div class="link" onclick="getThumb()">压缩(智能缩减尺寸)</div>
+    <div class="link" onclick="getThumb2()">压缩(原图尺寸)</div>
+    <div class="link" onclick="getThumb(true)">按比例压缩</div>
+
+    <img src="" id="result">
+
+    <a id="download" class="link" style="margin-bottom: 5%" download="thumb.jpeg" href="">下载图片</a>
 </body>
 <script src="../js/lib/require.js" data-main="../js/main"></script>
 <script>
-    
+    var result = document.getElementById('result')
+    var download = document.getElementById('download')
+    function getThumb(scale) {
+        var input = document.getElementById('input').value
+        $compress({
+            src: 'https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg',
+            width: scale?document.getElementById('kuan').value:null,
+            height:scale?document.getElementById('gao').value:null,
+            quality: input
+        }, function (base64, blob) {
+            result.src = base64
+            download.href = base64
+        })
+    }
+    function getThumb2() {
+        var input = document.getElementById('input').value
+        $compress({
+            src: 'https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg',
+            quality: input,
+            original: true
+        }, function (base64) {
+            result.src = base64
+            download.href = base64
+        })
+    }
 </script>
 </html>
