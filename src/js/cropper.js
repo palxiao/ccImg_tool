@@ -1,25 +1,66 @@
 define([
-  'lib/cropper'
+  'cropper'
 ], function (Cropper) {
   'use strict';
-  var myCropper = function (obj) {
-    return new myCropper.prototype.init(obj)
+  var cropper, result, blobResult;
+  var myCropper = function (src) {
+    return new myCropper.prototype.init(src)
   }
-  myCropper.prototype.init = function (obj) {
-    var image = document.querySelector('#outImg');
-    console.log(obj);
-    
-    
-    var cropper = new Cropper(image, {
-      aspectRatio: obj.aspectRatio || '',
-      ready: function () {
-        // c.setAspectRatio('') // 16/9 4/3 2/3 1/1
-        this.cropper.setDragMode('move')
-        obj.ok('done')
+  myCropper.prototype = {
+    init: function (src) {
+      if (!src) return
+      this.creat()
+      this.image = document.querySelector('#ccw_cropper_image');
+      this.image.src = src
+    },
+    open: function (obj) {
+      cropper = new Cropper(this.image, {
+        aspectRatio: obj.aspectRatio || '', // 16/9 4/3 2/3 1/1
+        ready: function () {
+          this.cropper.setDragMode('move')
+          if (obj.ok) result = obj.ok
+          if (obj.toBlob) blobResult = obj.toBlob
+        }
+      });
+      this.model('show')
+    },
+    crop: function () {
+      var base64 = cropper.getCroppedCanvas().toDataURL('image/jpeg');
+      result(base64);
+      cropper.getCroppedCanvas().toBlob(function (blob) {
+        blobResult(blob)
+        // var formData = new FormData();
+        // formData.append('croppedImage', blob);
+      })
+      this.model('hide', true)
+    },
+    model: function (type, flag) {
+      if (type === 'show') {
+        document.getElementById('ccw_cropprt_out').style.display = 'table'
+      } else if ('hide') {
+        document.getElementById('ccw_cropprt_out').style.display = 'none'
+        if (cropper) cropper.destroy();
+        cropper = null;
+        if (!flag) result()
       }
-    });
+    },
+    creat: function () {
+      var html_fragment
+      html_fragment = '<div id="ccw_cropprt_out">'+
+      '<div class="ccw_cropper_container">'+
+        '<div><img id="ccw_cropper_image" src="" crossorigin></div>'+
+        '<div class="ccw_cropper_confirm" onclick="$cropper().crop()">确 认</div>'+
+        '<div class="ccw_cropper_cancel" onclick="$cropper().model(\'hide\')">取 消</div>'+
+      '</div>'+
+    '</div>'
+      if (document.querySelector("#ccw_cropprt_out")) return;
+      document.body.insertAdjacentHTML('afterbegin', html_fragment);
+      var wHeight = document.documentElement.clientHeight;
+      document.getElementById("ccw_cropprt_out").style.height= wHeight +"px";
+    }
   }
-  
+
   myCropper.prototype.init.prototype = myCropper.prototype
-  return myCropper
+  // return myCropper
+  window.$cropper = myCropper
 });

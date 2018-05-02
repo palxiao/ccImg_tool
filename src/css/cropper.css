@@ -303,3 +303,36 @@
 .cropper-disabled .cropper-point {
   cursor: not-allowed;
 }
+
+/* customer */
+#ccw_cropprt_out {
+  color: beige;
+  display: table;
+  width: 100%;
+  text-align: center;
+  background:black;
+  display: none;
+}
+.ccw_cropper_container {
+  width: 100%;
+  display:table-cell;
+  vertical-align:middle;
+  text-align:center;
+}
+#ccw_cropper_image {
+  max-width: 100%;
+}
+.ccw_cropper_confirm, .ccw_cropper_cancel {
+  color: aliceblue;
+  position: fixed;
+  border: 1px solid white;
+  border-radius: 5px;
+  bottom: 3%;
+  padding: 6px 10px;
+}
+.ccw_cropper_confirm {
+  left: 5%;
+}
+.ccw_cropper_cancel {
+  right: 5%;
+}
