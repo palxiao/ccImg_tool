@@ -5,7 +5,10 @@ require.config({
     '$cropper': 'app/cropper',
     'cropper': 'lib/cropper',
     'toBlob': 'lib/canvas-to-blob.min',
-    'compress': 'app/compress'
+    'compress': 'app/compress',
+    'watermark': 'app/watermark',
+    'isArray': 'app/is_array',
+    'getLength': 'app/get_length'
   },
 
   shim: {
@@ -16,6 +19,8 @@ require.config({
   }
 });
 
-require(['compress', '$cropper'], function (compress) {
+require(['compress', 'watermark', '$cropper'], function (compress, watermark, myCropper) {
+  $cropper = myCropper
   $compress = compress
+  $watermark = watermark
 })

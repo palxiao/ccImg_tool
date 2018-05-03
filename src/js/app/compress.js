@@ -1,6 +1,7 @@
 define([
+    'isArray',
     'toBlob'
-], function () {
+], function (isArray) {
     'use strict';
     var params
     var Compress = function (obj) {
@@ -9,7 +10,7 @@ define([
     Compress.prototype = {
         init: function (obj) {
             params = obj
-            if (this.isArray(params.src)) {
+            if (isArray(params.src)) {
                 var dispose = this.dispose
                 var a = 0
                 var result = []
@@ -84,15 +85,8 @@ define([
                     }
                 }
             }, false);
-            img.setAttribute("crossOrigin", 'Anonymous')
+            img.crossOrigin = 'Anonymous';
             img.src = path;
-        },
-        isArray: function (value) {
-            if (typeof Array.isArray === "function") {
-                return Array.isArray(value)
-            } else {
-                return Object.prototype.toString.call(value) === "[object Array]"
-            }
         }
     }
     Compress.prototype.init.prototype = Compress.prototype

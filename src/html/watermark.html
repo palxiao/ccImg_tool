@@ -8,15 +8,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" type="text/css" href="../css/reset.css" />
     <style>
+        .link {
+            margin-top: 5%;
+            width: 90%;
+            margin-left: 5%;
+            height: 30px;
+            color: #fff;
+            text-align: center;
+            display: block;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            background: #000;
+            text-decoration: none;
+            line-height: 30px;
+        }
     </style>
 </head>
 
 <body>
+    <img id="demo" src="" style="width: 100%">
+    <label style="margin-top:5%;display: block;">
+        水印文字：
+        <input id="text" type="text" value="@代码钢琴师">
+    </label>
+    <label style="margin-top:5%;display: block;">
+        字体大小：
+        <input id="font_size" type="number" value="50" style="width: 20%">
+        <span style="font-size: 14px">设为0或不传则自动适应</span>
+    </label>
 
+    <div class="link" onclick="watermark()">图片打水印</div>
+    <label class="inner" title="选择图片" for="chooseImg">
+        <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" style="display: none" onchange="selectImg(this)">
+        <div class="link">更换图片</div>
+    </label>
 </body>
 <script data-main="../js/main" src="../js/lib/require.js"></script>
 <script>
+    var img = document.getElementById('demo');
+    var input = document.getElementById('chooseImg');
+    var src = "https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg"
 
+    function watermark() {
+        var text = document.getElementById('text').value
+        var font_size = document.getElementById('font_size').value
+        $watermark(src).add({
+            text: text,
+            fontSize: font_size,
+            ok: function (base64) {
+                img.src = base64
+            }
+        })
+    }
+
+    function selectImg(file) {
+        if (!file.files || !file.files[0]) {
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            var replaceSrc = evt.target.result;
+            input.value = '';
+            img.src = replaceSrc;
+            src = replaceSrc;
+        }
+        reader.readAsDataURL(file.files[0]);
+    }
 </script>
 
 </html>

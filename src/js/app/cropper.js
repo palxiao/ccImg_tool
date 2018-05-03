@@ -61,6 +61,5 @@ define([
   }
 
   myCropper.prototype.init.prototype = myCropper.prototype
-  // return myCropper
-  window.$cropper = myCropper
+  return myCropper
 });
