@@ -11,13 +11,13 @@
     optimizeCss: 'standard',
     removeCombined: true,
     paths: {
-        "cropper": "lib/cropper.min",
-        "toBlob": "lib/canvas-to-blob.min"
+        '$cropper': 'app/cropper',
+        'cropper': 'lib/cropper',
+        'toBlob': 'lib/canvas-to-blob.min',
+        'compress': 'app/compress'
     },
+
     shim: {
-        'toBlob': {
-            exports: 'toBlob'
-        },
         'cropper': {
             deps: ['toBlob'],
             exports: 'cropper'

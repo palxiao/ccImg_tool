@@ -2,9 +2,10 @@ require.config({
   // baseUrl: "js",
 
   paths: {
-    '$cropper': 'cropper',
+    '$cropper': 'app/cropper',
     'cropper': 'lib/cropper',
-    'toBlob': 'lib/canvas-to-blob.min'
+    'toBlob': 'lib/canvas-to-blob.min',
+    'compress': 'app/compress'
   },
 
   shim: {
@@ -14,7 +15,6 @@ require.config({
     }
   }
 });
-
 
 require(['compress', '$cropper'], function (compress) {
   $compress = compress

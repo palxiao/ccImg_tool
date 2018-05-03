@@ -1,5 +1,5 @@
 define([
-  'cropper'
+  'lib/cropper'
 ], function (Cropper) {
   'use strict';
   var cropper, result, blobResult;
