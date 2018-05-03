@@ -14,6 +14,7 @@ define([
                 var dispose = this.dispose
                 var a = 0
                 var result = []
+                var blob_result = []
                 thumb()
                 function thumb() {
                     if (params.src[a]) {
@@ -21,9 +22,14 @@ define([
                             a++
                             result.push(base64)
                             thumb()
+                        }, function (blob) {
+                            blob_result.push(blob)
                         })
                     } else {
-                        params.ok(result)
+                        if (params.ok) params.ok(result)
+                        setTimeout(function () {
+                            if (params.toBlob) params.toBlob(blob_result)
+                        }, 600);
                     }
                 }
             } else {
