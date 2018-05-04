@@ -45,7 +45,6 @@
 </head>
 
 <body>
-
   <div id="main" class="main">
     <label class="inner" title="选择图片" for="chooseImg">
       <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" style="display: none" onchange="selectImg(this)">
@@ -67,19 +66,19 @@
   var download = document.getElementById('download');
   var outImg = document.getElementById('outImg')
   var input = document.getElementById('chooseImg');
-
-  function selectImg(file) {
+  
+  var selectImg = function (file) {
     if (!file.files || !file.files[0]) {
       return;
     }
     var reader = new FileReader();
     reader.onload = function (evt) {
+      input.value = '';
       document.getElementById('download').style.display = 'none'
       var replaceSrc = evt.target.result;
-      input.value = '';
 
-      /**@see 这里开始调用方法
-       * */
+    //   /**@see 这里开始调用方法
+    //    * */
       $cropper(replaceSrc).open({
         aspectRatio: 1,
         ok: function (base64) {
@@ -89,10 +88,10 @@
           }
           document.getElementById('download').style.display = ''
         },
-        toBlob(blob) {
-          var formData = new FormData();
-          formData.append('croppedImage', blob);
-          console.log(formData.get('croppedImage'));
+        toBlob: function (blob) {
+          // var formData = new FormData();
+          // formData.append('croppedImage', blob);
+          // console.log(formData.get('croppedImage'));
         }
       })
     }

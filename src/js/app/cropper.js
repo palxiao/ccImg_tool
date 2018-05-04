@@ -27,11 +27,13 @@ define([
     crop: function () {
       var base64 = cropper.getCroppedCanvas().toDataURL('image/jpeg');
       result(base64);
-      cropper.getCroppedCanvas().toBlob(function (blob) {
-        blobResult(blob)
-        // var formData = new FormData();
-        // formData.append('croppedImage', blob);
-      })
+      try {
+        cropper.getCroppedCanvas().toBlob(function (blob) {
+          blobResult(blob)
+        })
+      } catch (error) {
+        // 当前浏览器将无法生成blob
+      }
       this.model('hide', true)
     },
     model: function (type, flag) {
@@ -46,17 +48,17 @@ define([
     },
     creat: function () {
       var html_fragment
-      html_fragment = '<div id="ccw_cropprt_out">'+
-      '<div class="ccw_cropper_container">'+
-        '<div><img id="ccw_cropper_image" src="" crossorigin></div>'+
-        '<div class="ccw_cropper_confirm" onclick="$cropper().crop()">确 认</div>'+
-        '<div class="ccw_cropper_cancel" onclick="$cropper().model(\'hide\')">取 消</div>'+
-      '</div>'+
-    '</div>'
+      html_fragment = '<div id="ccw_cropprt_out">' +
+        '<div class="ccw_cropper_container">' +
+        '<div><img id="ccw_cropper_image" class="ccw_cropper_image" src=""></div>' +
+        '<div class="ccw_cropper_confirm" onclick="$cropper().crop()">确 认</div>' +
+        '<div class="ccw_cropper_cancel" onclick="$cropper().model(\'hide\')">取 消</div>' +
+        '</div>' +
+        '</div>'
       if (document.querySelector("#ccw_cropprt_out")) return;
       document.body.insertAdjacentHTML('afterbegin', html_fragment);
       var wHeight = document.documentElement.clientHeight;
-      document.getElementById("ccw_cropprt_out").style.height= wHeight +"px";
+      document.getElementById("ccw_cropprt_out").style.height = wHeight + "px";
     }
   }
 

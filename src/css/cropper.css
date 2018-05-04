@@ -319,8 +319,8 @@
   vertical-align:middle;
   text-align:center;
 }
-#ccw_cropper_image {
-  max-width: 100%;
+.ccw_cropper_image {
+  width: 100%;
 }
 .ccw_cropper_confirm, .ccw_cropper_cancel {
   color: aliceblue;

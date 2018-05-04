@@ -7,7 +7,7 @@
     <title>gif生成</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <style>
-    .link {
+        .link {
             margin-top: 5%;
             width: 90%;
             margin-left: 5%;
@@ -21,16 +21,20 @@
             background: #000;
             text-decoration: none;
             line-height: 30px;
-        }</style>
+        }
+    </style>
 </head>
 
 <body>
     <img style="width: 100%" src="" id="gif">
-    <input type="text" value="我就是饿死"><br>
-    <input type="text" value="从这里跳下去"><br>
-    <input type="text" value="也不会吃你们一口饭"><br>
+    <input type="text" value="我就是饿死">
+    <br>
+    <input type="text" value="从这里跳下去">
+    <br>
+    <input type="text" value="也不会吃你们一口饭">
+    <br>
     <input type="text" value="真香">
-    <div class="link">生成</div>
+    <div class="link" onclick="generate()">生成</div>
     <a href="" class="link" id="download">下载</a>
 </body>
 <script src="../js/lib/gif.js"></script>
@@ -42,47 +46,51 @@
         workerScript: '../js/lib/gif.worker.js'
     });
 
-    var i = 9
-    var arr = ['我就是饿死', '从这里跳下去', '也不会吃你们一口饭', '真香']
-    addFrame()
-    function addFrame() {
-        var image = new Image()
-        image.addEventListener("load", function () {
-            i++
-            var canvas = document.createElement("canvas");
-            canvas.width = this.width;
-            canvas.height = this.height;
-            var ctx = canvas.getContext("2d");
-            ctx.drawImage(this, 0, 0);
-            var fontSize = 20;
-            ctx.font = fontSize + "px sans-serif";
-            ctx.fillStyle = "#FFFFFF";
-            var txt
-            if (i <= 24) {
-                txt = arr[0];
-            } else if (i > 24 && i <= 46) {
-                txt = arr[1];
-            } else if (i > 46 && i <= 68) {
-                txt = arr[2];
-            } else if (i > 68) {
-                txt = arr[3];
-            }
-            ctx.fillText(txt, (canvas.width - txt.length * fontSize) / 2, canvas.height - fontSize / 2);
-            if (i === 85) {
-                gif.render();
-            } else {
-                gif.addFrame(canvas, { delay: 100 })
-                addFrame()
-            }
-        }, false);
-        image.src = '../image/wjz/' + i + '.png'
+    var generate = function () {
+        var i = 9
+        var arr = ['我就是饿死', '从这里跳下去', '也不会吃你们一口饭', '真香']
+        addFrame()
+
+        function addFrame() {
+            var image = new Image()
+            image.addEventListener("load", function () {
+                i++
+                var canvas = document.createElement("canvas");
+                canvas.width = this.width;
+                canvas.height = this.height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(this, 0, 0);
+                var fontSize = 20;
+                ctx.font = fontSize + "px sans-serif";
+                ctx.fillStyle = "#FFFFFF";
+                var txt
+                if (i <= 24) {
+                    txt = arr[0];
+                } else if (i > 24 && i <= 46) {
+                    txt = arr[1];
+                } else if (i > 46 && i <= 68) {
+                    txt = arr[2];
+                } else if (i > 68) {
+                    txt = arr[3];
+                }
+                ctx.fillText(txt, (canvas.width - txt.length * fontSize) / 2, canvas.height - fontSize / 2);
+                if (i === 85) {
+                    gif.render();
+                } else {
+                    gif.addFrame(canvas, {
+                        delay: 100
+                    })
+                    addFrame()
+                }
+            }, false);
+            image.src = '../image/wjz/' + i + '.png'
+        }
     }
+
     gif.on('finished', function (blob) {
         document.getElementById('gif').src = URL.createObjectURL(blob)
         document.getElementById('download').href = URL.createObjectURL(blob)
     });
-
-
 </script>
 
 </html>

@@ -8,7 +8,8 @@ require.config({
     'compress': 'app/compress',
     'watermark': 'app/watermark',
     'isArray': 'app/is_array',
-    'getLength': 'app/get_length'
+    'getLength': 'app/get_length',
+    'base64toBlob': 'app/base64toBlob'
   },
 
   shim: {
