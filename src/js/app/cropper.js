@@ -1,8 +1,11 @@
 define([
-  'lib/cropper'
-], function (Cropper) {
+  'cropper',
+  'base64toBlob'
+], function (Cropper, base64toBlob) {
   'use strict';
   var cropper, result, blobResult;
+  var rootElement = document.scrollingElement || document.body;
+  var scrollTop = rootElement.scrollTop;
   var myCropper = function (src) {
     return new myCropper.prototype.init(src)
   }
@@ -10,6 +13,7 @@ define([
     init: function (src) {
       if (!src) return
       this.creat()
+      this.disScroll()
       this.image = document.querySelector('#ccw_cropper_image');
       this.image.src = src
     },
@@ -25,25 +29,30 @@ define([
       this.model('show')
     },
     crop: function () {
-      var base64 = cropper.getCroppedCanvas().toDataURL('image/jpeg');
+      var can = cropper.getCroppedCanvas();
+      var base64 = can.toDataURL('image/jpeg');
       result(base64);
       try {
-        cropper.getCroppedCanvas().toBlob(function (blob) {
+        can.toBlob(function (blob) {
           blobResult(blob)
         })
       } catch (error) {
-        // 当前浏览器将无法生成blob
+        blobResult(base64toBlob(can))
+      } finally {
+        this.model('hide', true)
       }
-      this.model('hide', true)
     },
     model: function (type, flag) {
       if (type === 'show') {
         document.getElementById('ccw_cropprt_out').style.display = 'table'
       } else if ('hide') {
         document.getElementById('ccw_cropprt_out').style.display = 'none'
-        if (cropper) cropper.destroy();
-        cropper = null;
+        if (cropper) {
+          cropper.destroy();
+          cropper = null;
+        }
         if (!flag) result()
+        this.returnScroll();
       }
     },
     creat: function () {
@@ -59,6 +68,14 @@ define([
       document.body.insertAdjacentHTML('afterbegin', html_fragment);
       var wHeight = document.documentElement.clientHeight;
       document.getElementById("ccw_cropprt_out").style.height = wHeight + "px";
+    },
+    disScroll: function () {
+      document.body.classList.add('cc_disScroll');
+      document.body.style.top = -scrollTop + 'px';
+    },
+    returnScroll: function () {
+      document.body.classList.remove('cc_disScroll');
+      rootElement.scrollTop = scrollTop;
     }
   }
 

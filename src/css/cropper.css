@@ -336,3 +336,7 @@
 .ccw_cropper_cancel {
   right: 5%;
 }
+.cc_disScroll {
+  position: fixed;
+  width: 100%;
+}

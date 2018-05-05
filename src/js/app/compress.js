@@ -1,7 +1,7 @@
 define([
     'isArray',
-    'toBlob'
-], function (isArray) {
+    'base64toBlob'
+], function (isArray, base64toBlob) {
     'use strict';
     var params
     var Compress = function (obj) {
@@ -85,9 +85,13 @@ define([
                         canvas2.width = image2.width;
                         canvas2.height = image2.height;
                         canvas2.getContext("2d").drawImage(image2, 0, 0);
-                        canvas2.toBlob(function (blob) {
-                            toBlob(blob);
-                        })
+                        try {
+                            canvas2.toBlob(function (blob) {
+                                toBlob(blob);
+                            })
+                        } catch (error) {
+                            toBlob(base64toBlob(canvas2));
+                        }
                     }
                 }
             }, false);

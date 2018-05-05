@@ -4,7 +4,6 @@ require.config({
   paths: {
     '$cropper': 'app/cropper',
     'cropper': 'lib/cropper',
-    'toBlob': 'lib/canvas-to-blob.min',
     'compress': 'app/compress',
     'watermark': 'app/watermark',
     'isArray': 'app/is_array',
@@ -14,7 +13,7 @@ require.config({
 
   shim: {
     'cropper': {
-      deps: ['toBlob'],
+      // deps: ['base64toBlob'],
       exports: 'cropper'
     }
   }

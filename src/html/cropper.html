@@ -38,8 +38,12 @@
     }
 
     #download {
+      width: 80px;
+      text-align: center;
       position: absolute;
       bottom: 20%;
+      margin-left: -40px;
+      left: 50%;
     }
   </style>
 </head>
@@ -50,8 +54,8 @@
       <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" style="display: none" onchange="selectImg(this)">
       <img id="outImg" src="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg" crossorigin>
     </label>
-    <a id="download" download="test.jpeg" href="">下载图片</a>
   </div>
+  <a id="download" download="test.jpeg" href="">下载图片</a>
 
 </body>
 
@@ -66,7 +70,7 @@
   var download = document.getElementById('download');
   var outImg = document.getElementById('outImg')
   var input = document.getElementById('chooseImg');
-  
+
   var selectImg = function (file) {
     if (!file.files || !file.files[0]) {
       return;
@@ -77,8 +81,8 @@
       document.getElementById('download').style.display = 'none'
       var replaceSrc = evt.target.result;
 
-    //   /**@see 这里开始调用方法
-    //    * */
+      //   /**@see 这里开始调用方法
+      //    * */
       $cropper(replaceSrc).open({
         aspectRatio: 1,
         ok: function (base64) {
