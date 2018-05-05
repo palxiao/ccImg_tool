@@ -10,34 +10,37 @@ define([
     Compress.prototype = {
         init: function (obj) {
             params = obj
-            if (isArray(params.src)) {
-                var dispose = this.dispose
-                var a = 0
-                var result = []
-                var blob_result = []
-                thumb()
-                function thumb() {
-                    if (params.src[a]) {
-                        dispose(params.src[a], function (base64) {
-                            a++
-                            result.push(base64)
-                            thumb()
-                        }, function (blob) {
-                            blob_result.push(blob)
-                        })
-                    } else {
-                        if (params.ok) params.ok(result)
-                        setTimeout(function () {
-                            if (params.toBlob) params.toBlob(blob_result)
-                        }, 600);
+            switch (isArray(params.src)) {
+                case true:
+                    var dispose = this.dispose
+                    var a = 0
+                    var result = []
+                    var blob_result = []
+                    thumb()
+                    var thumb = function () {
+                        if (params.src[a]) {
+                            dispose(params.src[a], function (base64) {
+                                a++
+                                result.push(base64)
+                                thumb()
+                            }, function (blob) {
+                                blob_result.push(blob)
+                            })
+                        } else {
+                            if (params.ok) params.ok(result)
+                            setTimeout(function () {
+                                if (params.toBlob) params.toBlob(blob_result)
+                            }, 300);
+                        }
                     }
-                }
-            } else {
-                this.dispose(params.src, function (base64) {
-                    if (params.ok) params.ok(base64)
-                }, function (blob) {
-                    if (params.toBlob) params.toBlob(blob)
-                })
+                    break;
+                case false:
+                    this.dispose(params.src, function (base64) {
+                        if (params.ok) params.ok(base64)
+                    }, function (blob) {
+                        if (params.toBlob) params.toBlob(blob)
+                    })
+                    break;
             }
         },
         dispose: function (path, result, toBlob) {
@@ -78,20 +81,12 @@ define([
                 var base64 = canvas.toDataURL('image/jpeg', quality / 100);
                 if (result) result(base64)
                 if (toBlob) {
-                    var image2 = new Image()
-                    image2.src = base64
-                    image2.onload = function () {
-                        var canvas2 = document.createElement("canvas");
-                        canvas2.width = image2.width;
-                        canvas2.height = image2.height;
-                        canvas2.getContext("2d").drawImage(image2, 0, 0);
-                        try {
-                            canvas2.toBlob(function (blob) {
-                                toBlob(blob);
-                            })
-                        } catch (error) {
-                            toBlob(base64toBlob(canvas2));
-                        }
+                    try {
+                        canvas.toBlob(function (blob) {
+                            toBlob(blob);
+                        })
+                    } catch (error) {
+                        toBlob(base64toBlob(base64))
                     }
                 }
             }, false);

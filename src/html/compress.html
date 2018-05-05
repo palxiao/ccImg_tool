@@ -64,6 +64,10 @@
             quality: input,
             ok: function (base64) {
                 result.src = base64
+            },
+            toBlob: function (params) {
+                console.log(params);
+                
             }
         })
     }
