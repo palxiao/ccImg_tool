@@ -4,51 +4,76 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>gif生成</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css">
     <style>
-        .link {
+        .custom {
             margin-top: 5%;
             width: 90%;
             margin-left: 5%;
-            height: 30px;
-            color: #fff;
-            text-align: center;
-            display: block;
-            -webkit-border-radius: 3px;
-            -moz-border-radius: 3px;
-            border-radius: 3px;
-            background: #000;
-            text-decoration: none;
-            line-height: 30px;
+        }
+        img {
+            max-width: 100%
         }
     </style>
 </head>
 
 <body>
-    <img style="width: 100%" src="" id="gif">
-    <input type="text" value="我就是饿死">
-    <br>
-    <input type="text" value="从这里跳下去">
-    <br>
-    <input type="text" value="也不会吃你们一口饭">
-    <br>
-    <input type="text" value="真香">
-    <div class="link" onclick="generate()">生成</div>
-    <a href="" class="link" id="download">下载</a>
+    <header class="ui-header ui-header-stable ui-border-b">
+        <h1>GIF制作</h1>
+        <a href="../index.html" class="ui-btn">首页</a>
+    </header>
+
+    <section class="ui-container">
+        <img style="width: 100%" src="" id="gif">
+        <div class="ui-form-item ui-border-b">
+            <label>
+                模板：
+            </label>
+            <select>
+                <option selected="selected">真香</option>
+            </select>
+        </div>
+
+        <div class="ui-form-item ui-border-b">
+            <input class="text" type="text" value="我就是饿死" placeholder="第一句">
+        </div>
+        <div class="ui-form-item ui-border-b">
+            <input class="text" type="text" value="从这里跳下去" placeholder="第二句">
+        </div>
+        <div class="ui-form-item ui-border-b">
+            <input class="text" type="text" value="也不会吃你们一口饭" placeholder="第三句">
+        </div>
+        <div class="ui-form-item ui-border-b">
+            <input class="text" type="text" value="真香" placeholder="第四句">
+        </div>
+
+        <button class="custom ui-btn-lg" onclick="generate()">生成</button>
+        <!-- <a href="" class="custom" id="download">下载</a> -->
+    </section>
+
 </body>
-<script src="../js/lib/gif.js"></script>
+<script data-main="../js/main" src="../js/lib/require.js"></script>
 <script>
-    var gif = new GIF({
-        workers: 3,
-        quality: 100,
-        debug: true,
-        workerScript: '../js/lib/gif.worker.js'
-    });
 
     var generate = function () {
+        var gif = new GIF({
+            workers: 3,
+            quality: 100,
+            debug: false,
+            workerScript: '../js/lib/gif.worker.js'
+        });
+        gif.on('finished', function (blob) {
+            document.getElementById('gif').src = URL.createObjectURL(blob)
+            // document.getElementById('download').href = URL.createObjectURL(blob)
+        });
         var i = 9
-        var arr = ['我就是饿死', '从这里跳下去', '也不会吃你们一口饭', '真香']
+        var arr = []
+        var els = document.getElementsByClassName('text')
+        for (let a = 0; a < els.length; a++) {
+            arr.push(els[a].value)
+        }
+
         addFrame()
 
         function addFrame() {
@@ -73,7 +98,7 @@
                 } else if (i > 68) {
                     txt = arr[3];
                 }
-                ctx.fillText(txt, (canvas.width - txt.length * fontSize) / 2, canvas.height - fontSize / 2);
+                ctx.fillText(txt, (canvas.width - $getLength(txt) * fontSize) / 2, canvas.height - fontSize / 2);
                 if (i === 85) {
                     gif.render();
                 } else {
@@ -86,11 +111,6 @@
             image.src = '../image/wjz/' + i + '.png'
         }
     }
-
-    gif.on('finished', function (blob) {
-        document.getElementById('gif').src = URL.createObjectURL(blob)
-        document.getElementById('download').href = URL.createObjectURL(blob)
-    });
 </script>
 
 </html>

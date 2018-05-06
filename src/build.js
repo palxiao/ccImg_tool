@@ -19,13 +19,14 @@
         'getLength': 'app/get_length',
         'base64toBlob': 'app/base64toBlob',
         'exif': 'lib/exif',
-        'imgRotate': 'app/canvasImg_rotate'
-      },
-    
-      shim: {
+        'imgRotate': 'app/canvasImg_rotate',
+        'gif': 'lib/gif'
+    },
+
+    shim: {
         'cropper': {
-          // deps: ['base64toBlob'],
-          exports: 'cropper'
+            // deps: ['base64toBlob'],
+            exports: 'cropper'
         }
-      }
+    }
 })
