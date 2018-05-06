@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css">
+    <style>
+        .custom {
+            margin: 5% 0px;
+            width: 90%;
+            margin-left: 5%;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="ui-header ui-header-stable ui-border-b">
+        <h1>图片水印</h1>
+        <a href="../index.html" class="ui-btn">首页</a>
+    </header>
+
+    <section class="ui-container">
+        <label class="inner" title="选择图片" for="chooseImg">
+            <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" style="display: none" onchange="selectImg(this)">
+            <div class="ui-btn-lg custom">选择图片</div>
+        </label>
+        <img id="demo" src="" style="width: 100%">
+        <div class="ui-form-item ui-border-b">
+            <label>
+                水印文字
+            </label>
+            <input id="text" type="text" value="@代码钢琴师" placeholder="@代码钢琴师">
+        </div>
+        <div class="ui-form-item ui-border-b">
+            <label>
+                字体大小
+            </label>
+            <input id="font_size" type="number" value="" placeholder="设为0或不传则自动适应">
+        </div>
+        <div onclick="watermark()" class="ui-btn-lg custom">打水印</div>
+
+    </section>
+</body>
+<script data-main="../js/main" src="../js/lib/require.js"></script>
+<script>
+    var img = document.getElementById('demo');
+    var input = document.getElementById('chooseImg');
+    var msrc = "https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg"
+
+    function watermark() {
+        var text = document.getElementById('text').value
+        var font_size = document.getElementById('font_size').value
+        $watermark(msrc).add({
+            text: text,
+            fontSize: font_size,
+            ok: function (base64) {
+                img.src = base64
+            }
+        })
+        // $watermark({
+        //     src: msrc,
+        //     text: text,
+        //     fontSize: font_size,
+        //     ok: function (base64) {
+        //         img.src = base64
+        //     }
+        // })
+    }
+
+    function selectImg(file) {
+        if (!file.files || !file.files[0]) {
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            var replaceSrc = evt.target.result;
+            input.value = '';
+            img.src = replaceSrc;
+            msrc = replaceSrc;
+        }
+        reader.readAsDataURL(file.files[0]);
+    }
+
+</script>
+
+</html>

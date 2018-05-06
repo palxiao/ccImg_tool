@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css">
+    <style>
+        .custom {
+            margin-top: 5%;
+            width: 90%;
+            margin-left: 5%;
+        }
+        img {
+            max-width: 100%
+        }
+    </style>
+</head>
+
+<body>
+    <header class="ui-header ui-header-stable ui-border-b">
+        <h1>GIF制作</h1>
+        <a href="../index.html" class="ui-btn">首页</a>
+    </header>
+
+    <section class="ui-container">
+        <img style="width: 100%" src="" id="gif">
+        <div class="ui-form-item ui-border-b">
+            <label>
+                模板：
+            </label>
+            <select>
+                <option selected="selected">真香</option>
+            </select>
+        </div>
+
+        <div class="ui-form-item ui-border-b">
+            <input class="text" type="text" value="我就是饿死" placeholder="第一句">
+        </div>
+        <div class="ui-form-item ui-border-b">
+            <input class="text" type="text" value="从这里跳下去" placeholder="第二句">
+        </div>
+        <div class="ui-form-item ui-border-b">
+            <input class="text" type="text" value="也不会吃你们一口饭" placeholder="第三句">
+        </div>
+        <div class="ui-form-item ui-border-b">
+            <input class="text" type="text" value="真香" placeholder="第四句">
+        </div>
+
+        <button class="custom ui-btn-lg" onclick="generate()">生成</button>
+        <!-- <a href="" class="custom" id="download">下载</a> -->
+    </section>
+
+</body>
+<script data-main="../js/main" src="../js/lib/require.js"></script>
+<script>
+
+    var generate = function () {
+        var gif = new GIF({
+            workers: 3,
+            quality: 100,
+            debug: false,
+            workerScript: '../js/lib/gif.worker.js'
+        });
+        gif.on('finished', function (blob) {
+            document.getElementById('gif').src = URL.createObjectURL(blob)
+            // document.getElementById('download').href = URL.createObjectURL(blob)
+        });
+        var i = 9
+        var arr = []
+        var els = document.getElementsByClassName('text')
+        for (let a = 0; a < els.length; a++) {
+            arr.push(els[a].value)
+        }
+
+        addFrame()
+
+        function addFrame() {
+            var image = new Image()
+            image.addEventListener("load", function () {
+                i++
+                var canvas = document.createElement("canvas");
+                canvas.width = this.width;
+                canvas.height = this.height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(this, 0, 0);
+                var fontSize = 20;
+                ctx.font = fontSize + "px sans-serif";
+                ctx.fillStyle = "#FFFFFF";
+                var txt
+                if (i <= 24) {
+                    txt = arr[0];
+                } else if (i > 24 && i <= 46) {
+                    txt = arr[1];
+                } else if (i > 46 && i <= 68) {
+                    txt = arr[2];
+                } else if (i > 68) {
+                    txt = arr[3];
+                }
+                ctx.fillText(txt, (canvas.width - $getLength(txt) * fontSize) / 2, canvas.height - fontSize / 2);
+                if (i === 85) {
+                    gif.render();
+                } else {
+                    gif.addFrame(canvas, {
+                        delay: 100
+                    })
+                    addFrame()
+                }
+            }, false);
+            image.src = '../image/wjz/' + i + '.png'
+        }
+    }
+</script>
+
+</html>
