@@ -48,18 +48,26 @@
 <script>
     var img = document.getElementById('demo');
     var input = document.getElementById('chooseImg');
-    var src = "https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg"
+    var msrc = "https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg"
 
     function watermark() {
         var text = document.getElementById('text').value
         var font_size = document.getElementById('font_size').value
-        $watermark(src).add({
+        $watermark(msrc).add({
             text: text,
             fontSize: font_size,
             ok: function (base64) {
                 img.src = base64
             }
         })
+        // $watermark({
+        //     src: msrc,
+        //     text: text,
+        //     fontSize: font_size,
+        //     ok: function (base64) {
+        //         img.src = base64
+        //     }
+        // })
     }
 
     function selectImg(file) {
@@ -71,10 +79,11 @@
             var replaceSrc = evt.target.result;
             input.value = '';
             img.src = replaceSrc;
-            src = replaceSrc;
+            msrc = replaceSrc;
         }
         reader.readAsDataURL(file.files[0]);
     }
+
 </script>
 
 </html>

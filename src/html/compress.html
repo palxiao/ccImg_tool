@@ -32,7 +32,7 @@
 </style>
 
 <body>
-    <img src="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg">
+    <img id="original" src="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg">
 
     <div style="margin: 5% 0px">设置压缩等级：
         <input style="text-align: center" type="number" id="input" value="40">（1~99）等级越小图片质量越小</div>
@@ -49,32 +49,35 @@
     <div id="batch"></div>
 
     <a id="download" class="link" style="margin-bottom: 5%" download="thumb.jpeg" href="">下载图片</a>
+    <label class="inner" title="选择图片" for="chooseImg">
+        <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" style="display: none" onchange="selectImg(this)">
+        <div class="link">更换图片</div>
+    </label>
 </body>
 <script data-main="../js/main" src="../js/lib/require.js"></script>
 <script>
+    var original = document.getElementById('original')
     var result = document.getElementById('result')
     var download = document.getElementById('download')
     var batch = document.getElementById('batch')
+    var input = document.getElementById('chooseImg');
+    var src = "https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg"
     function getThumb(scale) {
         var input = document.getElementById('input').value
         $compress({
-            src: 'https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg',
+            src: src,
             width: scale ? document.getElementById('kuan').value : null,
             height: scale ? document.getElementById('gao').value : null,
             quality: input,
             ok: function (base64) {
                 result.src = base64
-            },
-            toBlob: function (params) {
-                console.log(params);
-                
             }
         })
     }
     function getThumb2() {
         var input = document.getElementById('input').value
         $compress({
-            src: 'https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg',
+            src: src,
             quality: input,
             original: true,
             ok: function (base64) {
@@ -85,9 +88,7 @@
     function batchThumb() {
         var input = document.getElementById('input').value
         var arr = [
-            'https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg',
-            'https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg',
-            'https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg'
+            src, src, src
         ]
         $compress({
             src: arr,
@@ -102,6 +103,21 @@
             }
         })
     }
+
+    function selectImg(file) {
+        if (!file.files || !file.files[0]) {
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            var replaceSrc = evt.target.result;
+            input.value = '';
+            original.src = replaceSrc;
+            src = replaceSrc;
+        }
+        reader.readAsDataURL(file.files[0]);
+    }
+
 </script>
 
 </html>

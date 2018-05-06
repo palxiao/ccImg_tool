@@ -1,7 +1,8 @@
 define([
     'isArray',
-    'base64toBlob'
-], function (isArray, base64toBlob) {
+    'base64toBlob',
+    'imgRotate'
+], function (isArray, base64toBlob, imgRotate) {
     'use strict';
     var params
     var Compress = function (obj) {
@@ -17,7 +18,7 @@ define([
                     var result = []
                     var blob_result = []
                     thumb()
-                    var thumb = function () {
+                    function thumb () {
                         if (params.src[a]) {
                             dispose(params.src[a], function (base64) {
                                 a++
@@ -74,7 +75,10 @@ define([
                 anh.nodeValue = h;
                 canvas.setAttributeNode(anw);
                 canvas.setAttributeNode(anh);
-                ctx.drawImage(that, 0, 0, w, h);
+                imgRotate(that, canvas, {
+                    width: w,
+                    height: h
+                })
                 if (params.quality && params.quality <= 99 && params.quality > 0) {
                     quality = params.quality;
                 }
