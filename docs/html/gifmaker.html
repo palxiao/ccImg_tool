@@ -25,6 +25,7 @@
     </header>
 
     <section class="ui-container">
+        <div id="tip" style="display: none">正在制作...请稍候...</div>
         <img style="width: 100%" src="" id="gif">
         <div class="ui-form-item ui-border-b">
             <label>
@@ -57,8 +58,9 @@
 <script>
 
     var generate = function () {
+        document.getElementById('tip').style.display = ''
         var gif = new GIF({
-            workers: 3,
+            workers: 2,
             quality: 100,
             debug: false,
             workerScript: '../js/lib/gif.worker.js'
