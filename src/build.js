@@ -13,14 +13,19 @@
     paths: {
         '$cropper': 'app/cropper',
         'cropper': 'lib/cropper',
-        'toBlob': 'lib/canvas-to-blob.min',
-        'compress': 'app/compress'
-    },
-
-    shim: {
+        'compress': 'app/compress',
+        'watermark': 'app/watermark',
+        'isArray': 'app/is_array',
+        'getLength': 'app/get_length',
+        'base64toBlob': 'app/base64toBlob',
+        'exif': 'lib/exif',
+        'imgRotate': 'app/canvasImg_rotate'
+      },
+    
+      shim: {
         'cropper': {
-            deps: ['toBlob'],
-            exports: 'cropper'
+          // deps: ['base64toBlob'],
+          exports: 'cropper'
         }
-    }
+      }
 })
