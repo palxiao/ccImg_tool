@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css">
     <style>
         .custom {
@@ -12,6 +12,7 @@
             width: 90%;
             margin-left: 5%;
         }
+
         img {
             max-width: 100%
         }
@@ -25,7 +26,10 @@
     </header>
 
     <section class="ui-container">
-        <div id="tip" style="display: none">正在制作...请稍候...</div>
+        iphone点击右上角选择在Safari中打开
+        <div id="tip" style="display: none">正在制作...请稍候...
+            <a href="" style="display: none" id="download">下载图片</a>/长按保存图片</div>
+
         <img style="width: 100%" src="" id="gif">
         <div class="ui-form-item ui-border-b">
             <label>
@@ -50,13 +54,11 @@
         </div>
 
         <button class="custom ui-btn-lg" onclick="generate()">生成</button>
-        <!-- <a href="" class="custom" id="download">下载</a> -->
     </section>
 
 </body>
 <script data-main="../js/main" src="../js/lib/require.js"></script>
 <script>
-
     var generate = function () {
         document.getElementById('tip').style.display = ''
         var gif = new GIF({
@@ -67,7 +69,8 @@
         });
         gif.on('finished', function (blob) {
             document.getElementById('gif').src = URL.createObjectURL(blob)
-            // document.getElementById('download').href = URL.createObjectURL(blob)
+            document.getElementById('download').style.display = ''
+            document.getElementById('download').href = URL.createObjectURL(blob)
         });
         var i = 9
         var arr = []
@@ -87,7 +90,7 @@
                 canvas.height = this.height;
                 var ctx = canvas.getContext("2d");
                 ctx.drawImage(this, 0, 0);
-                var fontSize = 20;
+                var fontSize = 16;
                 ctx.font = fontSize + "px sans-serif";
                 ctx.fillStyle = "#FFFFFF";
                 var txt
@@ -100,7 +103,11 @@
                 } else if (i > 68) {
                     txt = arr[3];
                 }
-                ctx.fillText(txt, (canvas.width - $getLength(txt) * fontSize) / 2, canvas.height - fontSize / 2);
+                ctx.fillText(txt, (canvas.width - $getLength(txt) * fontSize) * 0.5, canvas.height -
+                    fontSize * 0.5);
+                // var base64 = canvas.toDataURL('image/jpeg', 0.2);
+                // var outImg = new Image()
+                // outImg.addEventListener("load", function () {
                 if (i === 85) {
                     gif.render();
                 } else {
@@ -109,8 +116,10 @@
                     })
                     addFrame()
                 }
+                // }, false);
+                // outImg.src = base64
             }, false);
-            image.src = '../image/wjz/' + i + '.png'
+            image.src = '../image/wjz/' + i + '.jpg'
         }
     }
 </script>

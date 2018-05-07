@@ -82,7 +82,7 @@ define([
                 if (params.quality && params.quality <= 99 && params.quality > 0) {
                     quality = params.quality;
                 }
-                var base64 = canvas.toDataURL('image/jpeg', quality / 100);
+                var base64 = canvas.toDataURL('image/jpeg', quality * 0.01);
                 if (result) result(base64)
                 if (toBlob) {
                     try {
