@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+    <canvas id="canvas" width="200" height="100"></canvas>
+    <canvas id="zoom" width="400" height="200"></canvas>
+    <div>
+        <label for="smoothbtn">
+        
+            <input type="checkbox" name="smoothbtn" checked="checked" id="smoothbtn">   Enable image smoothings
+        </label>
+        <button onclick="test(0,0)">像素缩放
+            <button>
+                <button onclick="test2()">测试
+                    <button>
+</body>
+<script>
+    var img = new Image();
+    img.src = 'https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg';
+    img.crossOrigin = 'Anonymous';
+    img.onload = function () {
+        draw(this);
+    };
+    function test(x, y) {
+        var canvas = document.getElementById('canvas');
+        var canvas2 = document.getElementById('zoom');
+        var zoomctx2 = canvas2.getContext('2d');
+        zoomctx2.drawImage(canvas, 0, 0, 300, 200, 0, 0, 600, 400);
+    }
+    function test2() {
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        var imgData = ctx.getImageData(0, 0, 200, 100);
+
+        for (var i = 0; i < imgData.data.length; i += 12) {
+            imgData.data.splice(i+6, 1);
+        }
+        var canvas2 = document.getElementById('zoom');
+        var zoomctx2 = canvas2.getContext('2d');
+        zoomctx2.putImageData(imgData, 10, 70);
+    }
+
+
+    function draw(img) {
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, 200, 100);
+        img.style.display = 'none';
+        var zoomctx = document.getElementById('zoom').getContext('2d');
+
+        var smoothbtn = document.getElementById('smoothbtn');
+        var toggleSmoothing = function (event) {
+            zoomctx.imageSmoothingEnabled = this.checked;
+            zoomctx.mozImageSmoothingEnabled = this.checked;
+            zoomctx.webkitImageSmoothingEnabled = this.checked;
+            zoomctx.msImageSmoothingEnabled = this.checked;
+        };
+        smoothbtn.addEventListener('change', toggleSmoothing);
+
+        var zoom = function (event) {
+            var x = event.layerX;
+            var y = event.layerY;
+            zoomctx.drawImage(canvas,
+                x,
+                y,
+                300, 200,
+                0, 0,
+                600, 400);
+        };
+
+        canvas.addEventListener('mousemove', zoom);
+    }
+</script>
+
+</html>
