@@ -81,40 +81,15 @@
     function getThumb(scale) {
         var quality = document.getElementById('quality').value
         result.src = ''
-        var img = new Image();
-        img.addEventListener("load", function () {
-            var canvas = document.createElement('canvas');
-            var ctx = canvas.getContext('2d');
-            var w = img.width;
-            var h = img.height;
-            canvas.width = w;
-            canvas.height = h;
-            ctx.drawImage(img, 0, 0, w, h);
-
-            var imgData = ctx.getImageData(0, 0, w, h);
-            for (var i = 0; i < imgData.data.length; i++) {
-                imgData.data[4 * i + 3] = imgData.data[4 * i + 3] / 2
+        $compress({
+            src: src,
+            width: scale ? document.getElementById('kuan').value : null,
+            height: scale ? document.getElementById('gao').value : null,
+            quality: quality,
+            ok: function (base64) {
+                result.src = base64
             }
-            var canvas2 = document.createElement('canvas')
-            canvas2.width = w;
-            canvas2.height = h;
-            var zoomctx2 = canvas2.getContext('2d')
-            zoomctx2.putImageData(imgData, 0, 0, 0, 0, w, h);
-
-            result.src = canvas2.toDataURL('image/jpeg', 0.3)
         })
-        img.crossOrigin = 'Anonymous';
-        img.src = src;
-
-        // $compress({
-        //     src: src,
-        //     width: scale ? document.getElementById('kuan').value : null,
-        //     height: scale ? document.getElementById('gao').value : null,
-        //     quality: quality,
-        //     ok: function (base64) {
-        //         result.src = base64
-        //     }
-        // })
     }
 
     function getThumb2() {

@@ -19,7 +19,7 @@ define([
                 canvas.height = img.width
                 ctx.save()
                 ctx.rotate(Math.PI / 2);
-                ctx.drawImage(img, 0, -img.height)
+                ctx.drawImage(img, 0, 0, 0, -img.height)
                 ctx.restore()
                 break;
             case 3:

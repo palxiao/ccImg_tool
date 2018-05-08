@@ -75,39 +75,16 @@ define([
                 anh.nodeValue = h;
                 canvas.setAttributeNode(anw);
                 canvas.setAttributeNode(anh);
-                // imgRotate(that, canvas, {
-                //     width: w,
-                //     height: h
-                // })
-                img.width = w
-                img.height = h
-                ctx.drawImage(img, 0, 0, img.width, img.height);
+                imgRotate(that, canvas, {
+                    width: w,
+                    height: h
+                })
                 if (params.quality && params.quality <= 99 && params.quality > 0) {
                     quality = params.quality;
                 }
-                console.log(w);
-                console.log(h);
-                
-                
-                var imgData = ctx.getImageData(0, 0, w, h);
-                console.log(imgData);
-                for (var i = 0; i < imgData.data.length; i += 6) {
-                    imgData.data[i + 3] = 255;
-                }
-                var canvas2 = document.createElement('canvas')
-                var zoomctx2 = canvas2.getContext('2d')
-                zoomctx2.putImageData(imgData, 0, 0);
-                result(canvas2.toDataURL('image/jpeg', quality * 0.01))
 
                 var base64 = canvas.toDataURL('image/jpeg', quality * 0.01);
-                // if (result) result(base64)
-                // var img2 = new Image()
-                // img2.src = base64
-                // img2.onload = function () {
-                //     var canvas2 = document.createElement('canvas')
-                //     var ctx2 = canvas2.getContext('2d')
-                    
-                // }
+                if (result) result(base64)
                 if (toBlob) {
                     try {
                         canvas.toBlob(function (blob) {

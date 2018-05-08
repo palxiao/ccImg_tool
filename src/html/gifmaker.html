@@ -84,16 +84,16 @@
         function addFrame() {
             var image = new Image()
             image.addEventListener("load", function () {
-                i++
+                i += 2
                 var canvas = document.createElement("canvas");
-                canvas.width = this.width;
-                canvas.height = this.height;
+                canvas.width = 1.2 * this.width;
+                canvas.height = 1.2 * this.height;
                 var w = canvas.width;
                 var h = canvas.height;
                 var ctx = canvas.getContext("2d");
-                ctx.drawImage(this, 0, 0);
+                ctx.drawImage(this, 0, 0, w, h);
 
-                var fontSize = 16;
+                var fontSize = 18;
                 ctx.font = fontSize + "px sans-serif";
                 ctx.fillStyle = "#FFFFFF";
                 var txt
@@ -107,40 +107,22 @@
                     txt = arr[3];
                 }
                 ctx.fillText(txt, (canvas.width - $getLength(txt) * fontSize) * 0.5, canvas.height - fontSize * 0.5);
-                
+
                 var imgData = ctx.getImageData(0, 0, w, h);
-
-                compress(imgData, function (backImgData) {
-                    
-                })
-
                 var canvas2 = document.createElement('canvas')
-                canvas2.width = this.width;
-                canvas2.height = this.height;
-                var zoomctx2 = canvas2.getContext('2d')
-                zoomctx2.putImageData(imgData, 0, 0, 0, 0, w, h);
-                document.getElementById('gif').src = canvas2.toDataURL('image/jpeg', 0.5)
-                
-                // try {
-                    
-                //     for (var i = 0; i < imgData.data.length; i++) {
-                //         imgData.data[4 * i + 3] = imgData.data[4 * i + 3] / 2
-                //     }
-                // } catch (e) {
-                //     console.log(e);
-                    
-                // }
-                // var canvas2 = document.createElement('canvas')
-                // canvas2.width = w;
-                // canvas2.height = h;
-                // var zoomctx2 = canvas2.getContext('2d')
-                // zoomctx2.putImageData(imgData, 0, 0, 0, 0, w, h);
+                compress(imgData, function (backImgData) {
+                    canvas2.width = w;
+                    canvas2.height = h;
+                    var zoomctx2 = canvas2.getContext('2d')
+                    zoomctx2.putImageData(backImgData, 0, 0, 0, 0, w, h);
+                    document.getElementById('gif').src = canvas2.toDataURL('image/jpeg', 0.5)
+                })
 
                 if (i === 85) {
                     gif.render();
                 } else {
                     gif.addFrame(canvas2, {
-                        delay: 80
+                        delay: 140
                     })
                     addFrame()
                 }
@@ -148,14 +130,8 @@
             image.src = '../image/wjz/' + i + '.jpg'
         }
         function compress(imgData, callback) {
-            console.log(imgData.data[0]);
-            console.log(imgData.data[1]);
-            console.log(imgData.data[2]);
-            console.log(imgData.data[3]);
-            imgData.data[3] = imgData.data[3] / 2
-            
             for (var i = 0; i < imgData.data.length; i++) {
-                // imgData.data[4 * i + 3] = imgData.data[4 * i + 3]
+                imgData.data[4 * i + 3] = imgData.data[4 * i + 3] * 0.85;
                 // imgData.data[4 * i + 0] = imgData.data[4 * i + 0] / 2;
                 // imgData.data[4 * i + 1] = imgData.data[4 * i + 1] / 2;
                 // imgData.data[4 * i + 2] = imgData.data[4 * i + 2] / 2;
@@ -164,10 +140,6 @@
                 // imgData.data[4 * i + 2] = imgData.data[4 * i + 2] * 0.4;
             }
             callback(imgData)
-            console.log("--"+imgData.data[0]);
-            console.log("--" + imgData.data[1]);
-            console.log("--" + imgData.data[2]);
-            console.log("--" + imgData.data[3]);
         }
 
     }
