@@ -77,6 +77,7 @@
     var batch = document.getElementById('batch')
     var input = document.getElementById('chooseImg');
     var src = "https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg"
+
     function getThumb(scale) {
         var quality = document.getElementById('quality').value
         result.src = ''
@@ -91,14 +92,16 @@
             ctx.drawImage(img, 0, 0, w, h);
 
             var imgData = ctx.getImageData(0, 0, w, h);
-            for (var i = 0; i < imgData.data.length; i += 6) {
-                imgData.data[i + 3] = 255;
+            for (var i = 0; i < imgData.data.length; i++) {
+                imgData.data[4 * i + 3] = imgData.data[4 * i + 3] / 2
             }
             var canvas2 = document.createElement('canvas')
+            canvas2.width = w;
+            canvas2.height = h;
             var zoomctx2 = canvas2.getContext('2d')
-            zoomctx2.putImageData(imgData, 0, 0);
+            zoomctx2.putImageData(imgData, 0, 0, 0, 0, w, h);
 
-            result.src = canvas2.toDataURL('image/jpeg')
+            result.src = canvas2.toDataURL('image/jpeg', 0.3)
         })
         img.crossOrigin = 'Anonymous';
         img.src = src;
@@ -113,6 +116,7 @@
         //     }
         // })
     }
+
     function getThumb2() {
         var quality = document.getElementById('quality').value
         result.src = ''
@@ -125,6 +129,7 @@
             }
         })
     }
+
     function batchThumb() {
         var quality = document.getElementById('quality').value
         var arr = [
@@ -168,7 +173,6 @@
         var quality = document.getElementById("quality");
         quality.value = num
     }
-
 </script>
 
 </html>
