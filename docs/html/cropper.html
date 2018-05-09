@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
   <title>web图片工具</title>
-  <link rel="stylesheet" type="text/css" href="../css/reset.css" />
+  <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css">
   <link rel="stylesheet" type="text/css" href="../css/cropper.css" />
   <style>
     .main {
@@ -45,14 +45,27 @@
       margin-left: -40px;
       left: 50%;
     }
+
+    #tip {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-left: -34px;
+      color: burlywood;
+    }
   </style>
 </head>
 
 <body>
+    <header class="ui-header ui-header-stable ui-border-b">
+        <h1>图片裁剪Demo</h1>
+        <a href="../index.html" class="ui-btn">首页</a>
+    </header>
   <div id="main" class="main">
     <label class="inner" title="选择图片" for="chooseImg">
       <input type="file" accept="image/jpg,image/jpeg,image/png" name="file" id="chooseImg" style="display: none" onchange="selectImg(this)">
-      <img id="outImg" src="https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg" crossorigin>
+      <img id="outImg" src="" crossorigin>
+      <div id="tip">选择图片</div>
     </label>
   </div>
   <a id="download" download="test.jpeg" href="">下载图片</a>
@@ -91,6 +104,7 @@
             download.href = base64;
           }
           document.getElementById('download').style.display = ''
+          document.getElementById('tip').style.display = 'none'
         },
         toBlob: function (blob) {
           // var formData = new FormData();

@@ -30,7 +30,7 @@
         <div id="tip" style="display: none">正在制作...请稍候...
             <a href="" style="display: none" id="download">下载图片</a>/长按保存图片</div>
 
-        <img style="width: 100%" src="" id="gif">
+        <img src="" id="gif">
         <div class="ui-form-item ui-border-b">
             <label>
                 模板：
@@ -84,13 +84,16 @@
         function addFrame() {
             var image = new Image()
             image.addEventListener("load", function () {
-                i++
+                i += 2
                 var canvas = document.createElement("canvas");
-                canvas.width = this.width;
-                canvas.height = this.height;
+                canvas.width = 1.2 * this.width;
+                canvas.height = 1.2 * this.height;
+                var w = canvas.width;
+                var h = canvas.height;
                 var ctx = canvas.getContext("2d");
-                ctx.drawImage(this, 0, 0);
-                var fontSize = 16;
+                ctx.drawImage(this, 0, 0, w, h);
+
+                var fontSize = 18;
                 ctx.font = fontSize + "px sans-serif";
                 ctx.fillStyle = "#FFFFFF";
                 var txt
@@ -103,24 +106,42 @@
                 } else if (i > 68) {
                     txt = arr[3];
                 }
-                ctx.fillText(txt, (canvas.width - $getLength(txt) * fontSize) * 0.5, canvas.height -
-                    fontSize * 0.5);
-                // var base64 = canvas.toDataURL('image/jpeg', 0.2);
-                // var outImg = new Image()
-                // outImg.addEventListener("load", function () {
+                ctx.fillText(txt, (canvas.width - $getLength(txt) * fontSize) * 0.5, canvas.height - fontSize * 0.5);
+
+                var imgData = ctx.getImageData(0, 0, w, h);
+                var canvas2 = document.createElement('canvas')
+                compress(imgData, function (backImgData) {
+                    canvas2.width = w;
+                    canvas2.height = h;
+                    var zoomctx2 = canvas2.getContext('2d')
+                    zoomctx2.putImageData(backImgData, 0, 0, 0, 0, w, h);
+                    document.getElementById('gif').src = canvas2.toDataURL('image/jpeg', 0.5)
+                })
+
                 if (i === 85) {
                     gif.render();
                 } else {
-                    gif.addFrame(canvas, {
-                        delay: 100
+                    gif.addFrame(canvas2, {
+                        delay: 140
                     })
                     addFrame()
                 }
-                // }, false);
-                // outImg.src = base64
             }, false);
             image.src = '../image/wjz/' + i + '.jpg'
         }
+        function compress(imgData, callback) {
+            for (var i = 0; i < imgData.data.length; i++) {
+                imgData.data[4 * i + 3] = imgData.data[4 * i + 3] * 0.85;
+                // imgData.data[4 * i + 0] = imgData.data[4 * i + 0] / 2;
+                // imgData.data[4 * i + 1] = imgData.data[4 * i + 1] / 2;
+                // imgData.data[4 * i + 2] = imgData.data[4 * i + 2] / 2;
+                // imgData.data[4 * i + 0] = imgData.data[4 * i + 0] * 0.4;
+                // imgData.data[4 * i + 1] = imgData.data[4 * i + 1] * 0.4;
+                // imgData.data[4 * i + 2] = imgData.data[4 * i + 2] * 0.4;
+            }
+            callback(imgData)
+        }
+
     }
 </script>
 

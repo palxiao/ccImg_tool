@@ -22,7 +22,7 @@
 
 <body>
     <header class="ui-header ui-header-stable ui-border-b">
-        <h1>图片压缩</h1>
+        <h1>图片压缩Demo</h1>
         <a href="../index.html" class="ui-btn">首页</a>
     </header>
     <section class="ui-container">
@@ -77,6 +77,7 @@
     var batch = document.getElementById('batch')
     var input = document.getElementById('chooseImg');
     var src = "https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg"
+
     function getThumb(scale) {
         var quality = document.getElementById('quality').value
         result.src = ''
@@ -90,6 +91,7 @@
             }
         })
     }
+
     function getThumb2() {
         var quality = document.getElementById('quality').value
         result.src = ''
@@ -102,6 +104,7 @@
             }
         })
     }
+
     function batchThumb() {
         var quality = document.getElementById('quality').value
         var arr = [
@@ -145,7 +148,6 @@
         var quality = document.getElementById("quality");
         quality.value = num
     }
-
 </script>
 
 </html>
