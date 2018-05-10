@@ -1,7 +1,7 @@
 define([
     'isArray',
     'base64toBlob',
-    'imgRotate'
+    'rotateDraw'
 ], function (isArray, base64toBlob, imgRotate) {
     'use strict';
     var params

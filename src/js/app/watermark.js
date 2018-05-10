@@ -1,6 +1,6 @@
 define([
     'getLength',
-    'imgRotate'
+    'rotateDraw'
 ], function (getLength, imgRotate) {
     // 'use strict';
     var Watermark = function (obj) {
@@ -22,9 +22,11 @@ define([
                 canvas.width = this.width;
                 canvas.height = this.height;
                 var ctx = canvas.getContext("2d");
-                var fontSize = obj.fontSize >= 1 ? obj.fontSize : parseInt(this.height / 14)
                 var txt = obj.text || obj;
+                
                 imgRotate(img, canvas);
+                
+                var fontSize = obj.fontSize >= 1 ? obj.fontSize : parseInt(canvas.height / 14)
                 ctx.font = fontSize + "px sans-serif";
                 ctx.fillStyle = "#FFFFFF";
                 ctx.fillText(txt, canvas.width - ((getLength(txt) + 0.5) * fontSize), canvas.height - fontSize / 2);

@@ -14,6 +14,7 @@
         }
 
         img {
+            margin-top: 15px;
             max-width: 100%
         }
     </style>
@@ -27,24 +28,27 @@
 
     <section class="ui-container">
         iphone点击右上角选择在Safari中打开
-        <div id="tip" style="display: none">正在制作...请稍候...
-            <a href="" style="display: none" id="download">下载图片</a>/长按保存图片</div>
-
+        <a href="" style="display: none" id="download">下载图片 / 长按图片保存</a>
+        <div id="tip" class="ui-loading-block show" style="display: none">
+            <div class="ui-loading-cnt">
+                <i class="ui-loading-bright"></i>
+                <p>正在制作中...</p>
+            </div>
+        </div>
         <img src="" id="gif">
         <div class="ui-form-item ui-border-b">
             <label>
                 模板：
             </label>
             <select>
-                <option selected="selected">真香</option>
+                <option selected="selected">真香.gif</option>
             </select>
         </div>
-
         <div class="ui-form-item ui-border-b">
             <input class="text" type="text" value="我就是饿死" placeholder="第一句">
         </div>
         <div class="ui-form-item ui-border-b">
-            <input class="text" type="text" value="从这里跳下去" placeholder="第二句">
+            <input class="text" type="text" value="死外边 从这里跳下去" placeholder="第二句">
         </div>
         <div class="ui-form-item ui-border-b">
             <input class="text" type="text" value="也不会吃你们一口饭" placeholder="第三句">
@@ -71,6 +75,7 @@
             document.getElementById('gif').src = URL.createObjectURL(blob)
             document.getElementById('download').style.display = ''
             document.getElementById('download').href = URL.createObjectURL(blob)
+            document.getElementById('tip').style.display = 'none'
         });
         var i = 9
         var arr = []
@@ -106,7 +111,8 @@
                 } else if (i > 68) {
                     txt = arr[3];
                 }
-                ctx.fillText(txt, (canvas.width - $getLength(txt) * fontSize) * 0.5, canvas.height - fontSize * 0.5);
+                ctx.fillText(txt, (canvas.width - $getLength(txt) * fontSize) * 0.5, canvas.height -
+                    fontSize * 0.5);
 
                 var imgData = ctx.getImageData(0, 0, w, h);
                 var canvas2 = document.createElement('canvas')
@@ -129,6 +135,7 @@
             }, false);
             image.src = '../image/wjz/' + i + '.jpg'
         }
+
         function compress(imgData, callback) {
             for (var i = 0; i < imgData.data.length; i++) {
                 imgData.data[4 * i + 3] = imgData.data[4 * i + 3] * 0.85;

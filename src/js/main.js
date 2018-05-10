@@ -8,9 +8,9 @@ require.config({
     'watermark': 'app/watermark',
     'isArray': 'app/is_array',
     'getLength': 'app/get_length',
-    'base64toBlob': 'app/base64toBlob',
+    'base64toBlob': 'app/base64_blob',
     'exif': 'lib/exif',
-    'imgRotate': 'app/canvasImg_rotate',
+    'rotateDraw': 'app/rotate_draw',
     'gif': 'lib/gif'
   },
 
