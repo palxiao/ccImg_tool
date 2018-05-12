@@ -76,7 +76,7 @@
     var result = document.getElementById('result')
     var batch = document.getElementById('batch')
     var input = document.getElementById('chooseImg');
-    var src = "https://raw.githubusercontent.com/fengyuanchen/cropperjs/master/docs/images/picture.jpg"
+    var src = document.getElementById('original').src;
 
     function getThumb(scale) {
         var quality = document.getElementById('quality').value

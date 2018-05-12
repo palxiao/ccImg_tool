@@ -29,3 +29,8 @@ require(['compress', 'watermark', '$cropper', 'gif', 'getLength'], function (com
   window.GIF = GIF
   $getLength = getLength
 })
+// require(['compress', 'watermark', '$cropper'], function (compress, watermark, myCropper) {
+//   $cropper = myCropper
+//   $compress = compress
+//   $watermark = watermark
+// })
