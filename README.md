@@ -18,7 +18,7 @@ JavaScript Html Css3 采用require.js模块化开发
 
 #### 使用说明
 
-#### 1. 图片裁剪
+## 1. 图片裁剪
 
 传入参数：
 > src: 图片地址
@@ -39,7 +39,7 @@ JavaScript Html Css3 采用require.js模块化开发
 		}
 	})
 
-#### 2. 图片压缩
+## 2. 图片压缩
 
 传入参数：
 > src：(string/array) 单个图片地址，或者多个图片地址的数组
@@ -64,7 +64,7 @@ JavaScript Html Css3 采用require.js模块化开发
 	    }
 	})
 	
-#### 3. 图片底部加水印
+## 3. 图片底部加水印
 
 传入参数：
 > src: 图片地址
