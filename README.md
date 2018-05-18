@@ -1,10 +1,6 @@
 #### Demo预览
 
-[http://111.230.209.91/ccimg/](http://111.230.209.91/ccimg/)
-
-#### 软件架构
-
-JavaScript Html Css3 采用require.js模块化开发
+[http://palxp.com/ccimg/](http://palxp.com/ccimg/)
 
 #### 安装说明
 
@@ -15,6 +11,14 @@ JavaScript Html Css3 采用require.js模块化开发
 使用到图片裁剪工具时需引入 css
 
 `<link rel="stylesheet" type="text/css" href="../css/cropper.css" />`
+
+#### npm引入方式
+	npm install ccimg
+项目中使用，目前只支持压缩和水印功能：
+
+	var ccimg = require('ccimg')
+	ccimg.compress() // 使用等价于下面的 $compress
+	ccimg.watermark() // 使用等价于下面的 $watermark
 
 #### 使用说明
 

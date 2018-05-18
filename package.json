@@ -1,0 +1,27 @@
+{
+  "name": "ccimg",
+  "version": "1.0.0",
+  "description": "A set of web image tools by js, include Compress, Watermark",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/palxiao/ccImg_tool.git"
+  },
+  "keywords": [
+    "js",
+    "compress",
+    "watermark"
+  ],
+  "author": "ShawnPhang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/palxiao/ccImg_tool/issues"
+  },
+  "homepage": "https://github.com/palxiao/ccImg_tool#readme"
+}
