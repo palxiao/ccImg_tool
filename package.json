@@ -1,6 +1,6 @@
 {
   "name": "ccimg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A set of web image tools by js, include Compress, Watermark",
   "main": "index.js",
   "directories": {
@@ -15,6 +15,7 @@
   },
   "keywords": [
     "js",
+    "javascript",
     "compress",
     "watermark"
   ],
