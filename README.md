@@ -14,11 +14,11 @@
 
 #### npm引入方式
 	npm install ccimg
-项目中使用，目前只支持压缩和水印功能：
+web项目中使用，目前只支持压缩和水印功能：
 
 	var ccimg = require('ccimg')
-	ccimg.compress() // 使用等价于下面的 $compress
-	ccimg.watermark() // 使用等价于下面的 $watermark
+	ccimg.compress // 使用等于下面的 $compress
+	ccimg.watermark // 使用等于下面的 $watermark
 
 #### 使用说明
 
