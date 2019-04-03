@@ -1,6 +1,6 @@
 #### Demo预览
 
-[http://palxp.com/ccimg/](http://palxp.com/ccimg/)
+[http://www.palxp.com/ccimg/](http://palxp.com/ccimg/)
 
 #### 安装说明
 
